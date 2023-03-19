@@ -3,7 +3,7 @@
  */
 
 export default {
-  bold: function(text) {
+  bold: function (text) {
     return `<strong>${text}</strong>`;
-  }
-}
+  },
+};

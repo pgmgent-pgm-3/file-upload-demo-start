@@ -26,7 +26,7 @@ export const saveAvatar = async (req, res, next) => {
         fit: sharp.fit.cover,
         withoutEnlargement: true,
       })
-      .toFile(`${PUBLIC_PATH}/images/avatar/${file.originalname}`);
+      .toFile(`${PUBLIC_PATH}/images/avatars/${file.originalname}`);
   } else {
     console.log("File type not supported"); // console
     res.send("File type not supported"); // browser

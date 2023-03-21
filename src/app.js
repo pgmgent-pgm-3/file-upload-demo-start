@@ -5,6 +5,7 @@ import { VIEWS_PATH } from "./consts.js";
 import { home } from "./controllers/home.js";
 import HandlebarsHelpers from "./lib/HandlebarsHelpers.js";
 import multer from "multer";
+import { saveAvatar } from "./middleware/saveAvatar.js";
 
 const app = express();
 app.use(express.static("public"));
@@ -24,8 +25,7 @@ app.set("views", VIEWS_PATH);
  * App Routing
  */
 app.get("/", home);
-app.post("/uploadAvatar", multer().single("avatar"), (req, res) => {
-  console.log(req.file);
+app.post("/uploadAvatar", multer().single("avatar"), saveAvatar, (req, res) => {
   res.send("OK");
 });
 

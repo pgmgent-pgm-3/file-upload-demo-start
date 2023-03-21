@@ -1,5 +1,7 @@
 import sharp from "sharp";
 import { PUBLIC_PATH } from "../consts.js";
+import { v4 as uuid } from "uuid";
+
 /**
  * The upload middleware
  * a user can upload a file via the browser
@@ -12,7 +14,7 @@ export const saveAvatar = async (req, res, next) => {
   console.log(file);
 
   // if no file is sent, skip this middleware
-  if (!file) next();
+  if (!file) return next();
 
   // check if the file is an image
   if (
@@ -21,12 +23,16 @@ export const saveAvatar = async (req, res, next) => {
     file.mimetype == "image/jpeg" ||
     file.mimetype == "image/gif"
   ) {
+    // filename: hello.png --> extract ".png"
+    const extension = file.originalname.split(".").pop();
+    const uniqueFileName = uuid() + "." + extension;
+
     await sharp(file.buffer)
       .resize(128, 128, {
         fit: sharp.fit.cover,
         withoutEnlargement: true,
       })
-      .toFile(`${PUBLIC_PATH}/images/avatars/${file.originalname}`);
+      .toFile(`${PUBLIC_PATH}/images/avatars/${uniqueFileName}`);
   } else {
     console.log("File type not supported"); // console
     res.send("File type not supported"); // browser

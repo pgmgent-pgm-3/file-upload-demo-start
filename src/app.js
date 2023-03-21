@@ -26,7 +26,7 @@ app.set("views", VIEWS_PATH);
  */
 app.get("/", home);
 app.post("/uploadAvatar", multer().single("avatar"), saveAvatar, (req, res) => {
-  res.send("OK");
+  res.redirect("/");
 });
 
 app.listen(process.env.PORT, () => {
